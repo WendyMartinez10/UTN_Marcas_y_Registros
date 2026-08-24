@@ -81,7 +81,7 @@ export const Perfil = () => {
                             <input
                                 type="date"
                                 className="form-control form-control-glass"
-                                value={user.fecha_nacimiento || ''}
+                                value={user.fecha_nacimiento ? user.fecha_nacimiento.slice(0, 10) : ''}
                                 disabled
                             />
                         </div>

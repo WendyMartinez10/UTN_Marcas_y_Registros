@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './useAuth.js';
-import { login } from '../services/auth.service.js';
+import { login, getProfile } from '../services/auth.service.js';
 
 export const useLogin = () => {
     const [credenciales, setCredenciales] = useState({ identificador: '', password: '' });
@@ -17,8 +17,16 @@ export const useLogin = () => {
         e.preventDefault();
         setError(null);
         try {
-            const res = await login(credenciales);
-            setUser(res.data.usuario);
+            await login(credenciales);
+
+            // El login solo devuelve id, nombre_usuario y rol. Se pide el
+            // perfil completo (correo, fecha_nacimiento, nombre_completo,
+            // departamento_id) para que el Navbar y la pantalla de Perfil
+            // muestren los datos correctos desde el primer momento, sin
+            // esperar a un refresh de la página.
+            const perfil = await getProfile();
+            setUser(perfil.data);
+
             navigate('/');
         } catch (err) {
             setError(err.message);
