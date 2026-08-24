@@ -13,25 +13,22 @@ export const getDispositivos = async (req, res, next) => {
 export const registerDispositivo = async (req, res, next) => {
     try {
         const { nombre, descripcion } = req.body;
-        const identificadorExistente = req.cookies?.device_id;
 
-        const { identificador, esNuevo } = await dispositivosService.registrar({
+        const { identificador } = await dispositivosService.registrar({
             usuarioId: req.session.usuario.id,
             nombre,
-            descripcion,
-            identificadorExistente
+            descripcion
         });
 
-        // Solo se envía la cookie cuando se generó un identificador nuevo;
-        // si el navegador ya traía una, se reutiliza sin reescribirla.
-        if (esNuevo) {
-            res.cookie('device_id', identificador, {
-                maxAge: 365 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                sameSite: 'lax',
-                secure: process.env.NODE_ENV === 'production' || process.env.COOKIE_SECURE === 'true'
-            });
-        }
+        // El navegador queda asociado al dispositivo recién registrado para
+        // efectos de marcar asistencia. Si el usuario registra otro
+        // dispositivo después, la cookie se sobreescribe con el nuevo.
+        res.cookie('device_id', identificador, {
+            maxAge: 365 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production' || process.env.COOKIE_SECURE === 'true'
+        });
 
         return successResponse(res, { message: 'Dispositivo registrado exitosamente', identificador }, 201);
     } catch (error) {

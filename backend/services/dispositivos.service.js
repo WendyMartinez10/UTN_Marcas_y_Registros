@@ -9,28 +9,21 @@ export const listarPorUsuario = async (usuarioId) => {
 };
 
 /**
- * Registra el dispositivo actual. Si el navegador ya tiene una cookie
- * `device_id` (identificadorExistente), reutiliza ese identificador; de lo
- * contrario genera uno nuevo con crypto.randomUUID(). El controlador es
- * quien decide si debe enviar la cookie `device_id` (esNuevo = true).
+ * Registra un nuevo dispositivo para el usuario. Cada registro genera
+ * siempre un identificador propio con crypto.randomUUID(), de modo que un
+ * mismo usuario pueda registrar varios dispositivos (laptop, celular,
+ * equipo de la oficina, etc.), incluso desde el mismo navegador.
+ *
+ * El identificador recién creado se guarda en la cookie `device_id`
+ * (esNuevo = true siempre), por lo que ese navegador queda asociado al
+ * dispositivo que se acaba de registrar para efectos de marcar asistencia.
  */
-export const registrar = async ({ usuarioId, nombre, descripcion, identificadorExistente }) => {
-    let identificador = identificadorExistente;
-    let esNuevo = false;
-
-    if (!identificador) {
-        identificador = crypto.randomUUID();
-        esNuevo = true;
-    } else {
-        const exists = await dispositivosModel.findByIdentificador(identificador);
-        if (exists) {
-            throw new AppError('Este dispositivo ya está registrado', 409);
-        }
-    }
+export const registrar = async ({ usuarioId, nombre, descripcion }) => {
+    const identificador = crypto.randomUUID();
 
     await dispositivosModel.create({ identificador, nombre, descripcion, usuario_id: usuarioId });
 
-    return { identificador, esNuevo };
+    return { identificador, esNuevo: true };
 };
 
 export const cambiarEstado = async ({ id, estado, usuarioId }) => {
