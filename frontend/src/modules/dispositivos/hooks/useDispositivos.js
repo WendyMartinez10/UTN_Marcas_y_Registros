@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getDispositivos, registrarDispositivo, cambiarEstadoDispositivo } from '../services/dispositivos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 export const useDispositivos = () => {
     const [dispositivos, setDispositivos] = useState([]);
     const [form, setForm] = useState({ nombre: '', descripcion: '' });
     const [msg, setMsg] = useState(null);
     const [error, setError] = useState(null);
+
+    useAutoDismiss(msg, setMsg);
+    useAutoDismiss(error, setError);
 
     useEffect(() => {
         loadDispositivos();

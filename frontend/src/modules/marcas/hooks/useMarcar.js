@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { registrarMarca } from '../services/marcas.service.js';
 import { registrarDispositivo } from '../../dispositivos/services/dispositivos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 export const useMarcar = () => {
     const [mensajeMarca, setMensajeMarca] = useState(null);
@@ -8,6 +9,11 @@ export const useMarcar = () => {
     const [mensajeDisp, setMensajeDisp] = useState(null);
     const [errorDisp, setErrorDisp] = useState(null);
     const [nombreDisp, setNombreDisp] = useState('');
+
+    useAutoDismiss(mensajeMarca, setMensajeMarca);
+    useAutoDismiss(errorMarca, setErrorMarca);
+    useAutoDismiss(mensajeDisp, setMensajeDisp);
+    useAutoDismiss(errorDisp, setErrorDisp);
 
     const handleMarcar = async () => {
         setMensajeMarca(null);

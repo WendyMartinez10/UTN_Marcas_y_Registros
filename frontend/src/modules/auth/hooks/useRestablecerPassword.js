@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/auth.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 export const useRestablecerPassword = () => {
     const [searchParams] = useSearchParams();
@@ -10,6 +11,8 @@ export const useRestablecerPassword = () => {
     const [form, setForm] = useState({ nueva_password: '', confirmar_password: '' });
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+
+    useAutoDismiss(error, setError);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

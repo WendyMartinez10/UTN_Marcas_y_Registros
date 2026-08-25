@@ -31,7 +31,14 @@ export const Configuracion = () => {
                                     type={meta.type}
                                     className="form-control form-control-glass"
                                     value={config[clave] ?? ''}
-                                    onChange={(e) => handleChange(clave, e.target.value)}
+                                    onChange={(e) => {
+                                        if (meta.type === 'number' && e.target.value.includes('-')) return;
+                                        handleChange(clave, e.target.value);
+                                    }}
+                                    onKeyDown={meta.type === 'number' ? (e) => {
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault();
+                                    } : undefined}
+                                    min={meta.type === 'number' ? 0 : undefined}
                                 />
                                 {meta.help && <div className="form-text">{meta.help}</div>}
                             </div>

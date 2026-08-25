@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/auth.service.js';
 import { getDepartamentos } from '../../departamentos/services/departamentos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 export const useRegistro = () => {
     const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ export const useRegistro = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    useAutoDismiss(error, setError);
 
     useEffect(() => {
         const getDeps = async () => {

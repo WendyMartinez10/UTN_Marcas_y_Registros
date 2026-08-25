@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getDepartamentos, crearDepartamento, actualizarDepartamento, eliminarDepartamento } from '../services/departamentos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 const initialForm = { nombre: '', descripcion: '', encargado: '' };
 
@@ -8,6 +9,8 @@ export const useDepartamentos = () => {
     const [form, setForm] = useState(initialForm);
     const [editing, setEditing] = useState(null);
     const [error, setError] = useState(null);
+
+    useAutoDismiss(error, setError);
 
     useEffect(() => {
         loadDepartamentos();

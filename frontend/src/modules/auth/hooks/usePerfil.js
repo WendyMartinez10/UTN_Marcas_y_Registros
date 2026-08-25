@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { updateProfile, changePassword } from '../services/auth.service.js';
 import { getDepartamentos } from '../../departamentos/services/departamentos.service.js';
 import { useAuth } from './useAuth.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 export const usePerfil = () => {
     const { user, setUser } = useAuth();
@@ -13,6 +14,11 @@ export const usePerfil = () => {
     const [passForm, setPassForm] = useState({ password_actual: '', nueva_password: '', confirmar_password: '' });
     const [msgPass, setMsgPass] = useState(null);
     const [errPass, setErrPass] = useState(null);
+
+    useAutoDismiss(msgPerfil, setMsgPerfil);
+    useAutoDismiss(errPerfil, setErrPerfil);
+    useAutoDismiss(msgPass, setMsgPass);
+    useAutoDismiss(errPass, setErrPass);
 
     useEffect(() => {
         if (user) {
