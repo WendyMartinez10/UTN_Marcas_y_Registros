@@ -9,6 +9,15 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     charset: 'utf8mb4',
+    // El contenedor de MySQL (imagen oficial mysql:8.0) usa UTC como su
+    // reloj interno, sin importar la zona horaria del sistema donde corre
+    // Node. Sin esta opción, mysql2 asume que las fechas que llegan de la
+    // base de datos ya están en la hora local del servidor Node y NO las
+    // convierte, provocando un desfase (p. ej. mostrar "25/8" y una hora
+    // adelantada cuando en realidad es "24/8"). 'Z' le indica a mysql2 que
+    // interprete esos valores como UTC, para que se conviertan
+    // correctamente a la hora local de quien los vea en el navegador.
+    timezone: 'Z',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
