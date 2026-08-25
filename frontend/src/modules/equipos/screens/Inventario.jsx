@@ -3,8 +3,9 @@ import { getImagenEquipoUrl } from '../../../api/client.js';
 
 export const Inventario = () => {
     const {
-        equipos, form, editing, editingEstadoOriginal,
-        handleChange, handleSubmit, handleEdit, handleCancelEdit, handleDelete
+        equipos, form, editing, editingEstadoOriginal, errorForm, errorEliminar, confirmarEliminar,
+        handleChange, handleSubmit, handleEdit, handleCancelEdit, handleDelete,
+        cancelarEliminar, confirmarEliminarEquipo
     } = useEquipos();
 
     return (
@@ -45,6 +46,7 @@ export const Inventario = () => {
                         <input type="file" className="form-control form-control-glass" name="imagen" onChange={handleChange} accept="image/*" />
                     </div>
                     <div className="col-12 mt-4">
+                        {errorForm && <div className="alert alert-danger p-2 text-center rounded-3 small">{errorForm}</div>}
                         <button type="submit" className="btn btn-premium px-4 me-2">{editing ? 'Actualizar' : 'Guardar Equipo'}</button>
                         {editing && <button type="button" className="btn btn-outline-danger px-4" onClick={handleCancelEdit}>Cancelar</button>}
                     </div>
@@ -52,6 +54,7 @@ export const Inventario = () => {
             </div>
 
             <div className="glass-panel overflow-hidden">
+                {errorEliminar && <div className="alert alert-danger p-2 text-center rounded-3 small m-3 mb-0">{errorEliminar}</div>}
                 <table className="table table-hover align-middle mb-0">
                     <thead className="bg-light">
                         <tr>
@@ -138,6 +141,25 @@ export const Inventario = () => {
                     </tbody>
                 </table>
             </div>
+
+            {confirmarEliminar && (
+                <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center animate-fade-in-up" style={{backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1060}}>
+                    <div className="glass-panel p-4" style={{width: '420px', maxWidth: '90%'}}>
+                        <div className="text-center mb-3">
+                            <i className="bi bi-exclamation-triangle text-danger" style={{fontSize: '2.5rem'}}></i>
+                        </div>
+                        <p className="text-center fw-semibold mb-4">¿Eliminar equipo?</p>
+                        <div className="d-flex justify-content-center gap-2">
+                            <button className="btn btn-danger px-4" onClick={confirmarEliminarEquipo}>
+                                <i className="bi bi-trash me-1"></i>Eliminar
+                            </button>
+                            <button className="btn btn-outline-secondary px-4" onClick={cancelarEliminar}>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

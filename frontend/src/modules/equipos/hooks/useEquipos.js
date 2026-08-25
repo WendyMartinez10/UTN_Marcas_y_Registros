@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getEquipos, crearEquipo, actualizarEquipo, eliminarEquipo } from '../services/equipos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
 
 const initialForm = { codigo: '', descripcion: '', estado: 'disponible', imagen: null };
 
@@ -8,6 +9,12 @@ export const useEquipos = () => {
     const [form, setForm] = useState(initialForm);
     const [editing, setEditing] = useState(null);
     const [editingEstadoOriginal, setEditingEstadoOriginal] = useState(null);
+    const [errorForm, setErrorForm] = useState(null);
+    const [errorEliminar, setErrorEliminar] = useState(null);
+    const [confirmarEliminar, setConfirmarEliminar] = useState(null);
+
+    useAutoDismiss(errorForm, setErrorForm);
+    useAutoDismiss(errorEliminar, setErrorEliminar);
 
     useEffect(() => {
         loadEquipos();
@@ -32,6 +39,7 @@ export const useEquipos = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorForm(null);
         const formData = new FormData();
         formData.append('codigo', form.codigo);
         formData.append('descripcion', form.descripcion);
@@ -49,7 +57,7 @@ export const useEquipos = () => {
             setEditingEstadoOriginal(null);
             loadEquipos();
         } catch (error) {
-            alert(error.message);
+            setErrorForm(error.message);
         }
     };
 
@@ -65,19 +73,28 @@ export const useEquipos = () => {
         setForm(initialForm);
     };
 
-    const handleDelete = async (id) => {
-        if (confirm('¿Eliminar equipo?')) {
-            try {
-                await eliminarEquipo(id);
-                loadEquipos();
-            } catch (error) {
-                alert(error.message);
-            }
+    const handleDelete = (id) => {
+        setErrorEliminar(null);
+        setConfirmarEliminar(id);
+    };
+
+    const cancelarEliminar = () => setConfirmarEliminar(null);
+
+    const confirmarEliminarEquipo = async () => {
+        const id = confirmarEliminar;
+        setConfirmarEliminar(null);
+        setErrorEliminar(null);
+        try {
+            await eliminarEquipo(id);
+            loadEquipos();
+        } catch (error) {
+            setErrorEliminar(error.message);
         }
     };
 
     return {
-        equipos, form, editing, editingEstadoOriginal,
-        handleChange, handleSubmit, handleEdit, handleCancelEdit, handleDelete
+        equipos, form, editing, editingEstadoOriginal, errorForm, errorEliminar, confirmarEliminar,
+        handleChange, handleSubmit, handleEdit, handleCancelEdit, handleDelete,
+        cancelarEliminar, confirmarEliminarEquipo
     };
 };
