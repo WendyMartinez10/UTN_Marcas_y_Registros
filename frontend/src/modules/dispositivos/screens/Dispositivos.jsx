@@ -11,9 +11,6 @@ export const Dispositivos = () => {
             <div className="glass-panel p-4 mb-4">
                 <h5 className="fw-bold mb-3"><i className="bi bi-plus-circle me-2 text-primary"></i>Registrar este dispositivo</h5>
 
-                {error && <div className="alert alert-danger p-2 text-center rounded-3 small">{error}</div>}
-                {msg && <div className="alert alert-success p-2 text-center rounded-3 small">{msg}</div>}
-
                 <form onSubmit={handleSubmit} className="row g-3">
                     <div className="col-md-5">
                         <input type="text" className="form-control form-control-glass" placeholder="Nombre (Ej: Laptop personal)" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
@@ -21,6 +18,8 @@ export const Dispositivos = () => {
                     <div className="col-md-5">
                         <input type="text" className="form-control form-control-glass" placeholder="Descripción (opcional)" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
                     </div>
+                    {error && <div className="col-12"><div className="alert alert-danger p-2 text-center rounded-3 small mb-0">{error}</div></div>}
+                    {msg && <div className="col-12"><div className="alert alert-success p-2 text-center rounded-3 small mb-0">{msg}</div></div>}
                     <div className="col-md-2 d-grid">
                         <button type="submit" className="btn btn-premium">Registrar</button>
                     </div>
