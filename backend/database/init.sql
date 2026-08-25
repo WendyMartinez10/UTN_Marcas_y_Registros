@@ -108,7 +108,7 @@ INSERT INTO departamentos (nombre, descripcion, encargado) VALUES
   ('Ingeniería en Tecnologías de Información', 'Carrera de TI, Sede Guanacaste', 'Juan Pablo Rodriguez B.');
 
 -- Usuario administrador semilla.
--- Usuario: admin | Correo: admin@utn.ac.cr | Contraseña: Admin123
+-- Usuario: admin | Correo: rrivera@utn.ac.cr | Contraseña: Admin123
 -- (la contraseña ya está almacenada con hash bcrypt, nunca en texto plano)
 INSERT INTO usuarios (nombre_completo, fecha_nacimiento, correo, departamento_id, nombre_usuario, password_hash, rol_id) VALUES
-  ('Administrador del Sistema', '1990-01-01', 'admin@utn.ac.cr', 1, 'admin', '$2b$10$TxwqeMh3sP5Bf7IphniCeOPCONSY4W2EmohJm.PQc0.sQj.8ekbay', 2);
+  ('Luis Roberto Rivera Gutiérrez', '	1977-08-07', 'rrivera@utn.ac.cr', 1, 'admin', '$2b$10$TxwqeMh3sP5Bf7IphniCeOPCONSY4W2EmohJm.PQc0.sQj.8ekbay', 2);
