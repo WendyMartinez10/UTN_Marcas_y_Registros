@@ -13,8 +13,6 @@ export const Departamentos = () => {
                     {editing ? 'Editar Departamento' : 'Nuevo Departamento'}
                 </h5>
 
-                {error && <div className="alert alert-danger p-2 text-center rounded-3 small">{error}</div>}
-
                 <form onSubmit={handleSubmit} className="row g-3">
                     <div className="col-md-4">
                         <input type="text" className="form-control form-control-glass" name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required />
@@ -25,6 +23,7 @@ export const Departamentos = () => {
                     <div className="col-md-4">
                         <input type="text" className="form-control form-control-glass" name="encargado" placeholder="Encargado" value={form.encargado} onChange={handleChange} />
                     </div>
+                    {error && <div className="col-12"><div className="alert alert-danger p-2 text-center rounded-3 small mb-0">{error}</div></div>}
                     <div className="col-12 mt-4">
                         <button type="submit" className="btn btn-premium px-4 me-2">{editing ? 'Actualizar' : 'Guardar Departamento'}</button>
                         {editing && <button type="button" className="btn btn-outline-danger px-4" onClick={handleCancel}>Cancelar</button>}
