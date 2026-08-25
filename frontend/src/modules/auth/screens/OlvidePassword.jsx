@@ -15,8 +15,6 @@ export const OlvidePassword = () => {
                             <p className="text-muted">Te enviaremos un enlace para restablecerla</p>
                         </div>
 
-                        {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
-
                         {enviado ? (
                             <div className="alert alert-success p-3 text-center rounded-3">
                                 <i className="bi bi-check-circle-fill me-2"></i>
@@ -36,6 +34,9 @@ export const OlvidePassword = () => {
                                     />
                                     <label htmlFor="identificador">Usuario o Correo</label>
                                 </div>
+
+                                {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
+
                                 <div className="d-grid">
                                     <button className="btn btn-premium py-2 fs-5" type="submit">Enviar enlace</button>
                                 </div>

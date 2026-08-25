@@ -15,9 +15,6 @@ export const Registro = () => {
                             <p className="text-muted">Únete al sistema de UTN Marcas y Equipos</p>
                         </div>
 
-                        {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
-                        {success && <div className="alert alert-success p-3 text-center rounded-3"><i className="bi bi-check-circle-fill me-2"></i>Registro exitoso. Redirigiendo...</div>}
-
                         <form onSubmit={handleSubmit}>
                             <div className="row g-3">
                                 <div className="col-md-6">
@@ -71,6 +68,9 @@ export const Registro = () => {
                                 </select>
                                 <label>Departamento al que pertenece</label>
                             </div>
+
+                            {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
+                            {success && <div className="alert alert-success p-3 text-center rounded-3"><i className="bi bi-check-circle-fill me-2"></i>Registro exitoso. Redirigiendo...</div>}
 
                             <div className="d-grid mt-2">
                                 <button className="btn btn-premium py-3 fs-5" type="submit" disabled={success}>

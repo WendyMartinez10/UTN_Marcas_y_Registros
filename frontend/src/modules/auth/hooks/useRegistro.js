@@ -34,12 +34,34 @@ export const useRegistro = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const calcularEdad = (fechaNacimiento) => {
+        const hoy = new Date();
+        const nacimiento = new Date(fechaNacimiento);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--;
+        }
+        return edad;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
         if (formData.password !== formData.confirmar_password) {
             setError('La contraseña y su confirmación no coinciden.');
+            return;
+        }
+
+        if (!formData.fecha_nacimiento) {
+            setError('Debe indicar una fecha de nacimiento.');
+            return;
+        }
+
+        const edad = calcularEdad(formData.fecha_nacimiento);
+        if (edad < 17 || edad > 100) {
+            setError('La edad debe estar entre 17 y 100 años para poder registrarse.');
             return;
         }
 

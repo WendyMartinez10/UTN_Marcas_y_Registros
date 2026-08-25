@@ -15,15 +15,6 @@ export const RestablecerPassword = () => {
                             <p className="text-muted">Ingresa tu nueva contraseña</p>
                         </div>
 
-                        {!token && (
-                            <div className="alert alert-warning p-3 text-center rounded-3">
-                                <i className="bi bi-exclamation-triangle-fill me-2"></i>
-                                No se encontró un token en el enlace. Solicita uno nuevo desde "Olvidé mi contraseña".
-                            </div>
-                        )}
-                        {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
-                        {success && <div className="alert alert-success p-3 text-center rounded-3"><i className="bi bi-check-circle-fill me-2"></i>Contraseña restablecida. Redirigiendo al login...</div>}
-
                         <form onSubmit={handleSubmit}>
                             <div className="form-floating mb-4">
                                 <input
@@ -53,6 +44,15 @@ export const RestablecerPassword = () => {
                                 />
                                 <label htmlFor="confirmar_password">Confirmar contraseña</label>
                             </div>
+                            {!token && (
+                                <div className="alert alert-warning p-3 text-center rounded-3">
+                                    <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                                    No se encontró un token en el enlace. Solicita uno nuevo desde "Olvidé mi contraseña".
+                                </div>
+                            )}
+                            {error && <div className="alert alert-danger p-3 text-center rounded-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>{error}</div>}
+                            {success && <div className="alert alert-success p-3 text-center rounded-3"><i className="bi bi-check-circle-fill me-2"></i>Contraseña restablecida. Redirigiendo al login...</div>}
+
                             <div className="d-grid">
                                 <button className="btn btn-premium py-2 fs-5" type="submit" disabled={!token || success}>Restablecer</button>
                             </div>

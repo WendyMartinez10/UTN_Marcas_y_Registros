@@ -86,21 +86,6 @@ export const Perfil = () => {
                             />
                         </div>
 
-                        {/* =================================================
-                            MENSAJES
-                        ================================================== */}
-                        {errPerfil && (
-                            <div className="alert alert-danger p-2 text-center rounded-3 small">
-                                {errPerfil}
-                            </div>
-                        )}
-
-                        {msgPerfil && (
-                            <div className="alert alert-success p-2 text-center rounded-3 small">
-                                {msgPerfil}
-                            </div>
-                        )}
-
                         <form onSubmit={handleSubmitPerfil}>
 
                             {/* =================================================
@@ -147,6 +132,21 @@ export const Perfil = () => {
                             </div>
 
                             {/* =================================================
+                                MENSAJES
+                            ================================================== */}
+                            {errPerfil && (
+                                <div className="alert alert-danger p-2 text-center rounded-3 small">
+                                    {errPerfil}
+                                </div>
+                            )}
+
+                            {msgPerfil && (
+                                <div className="alert alert-success p-2 text-center rounded-3 small">
+                                    {msgPerfil}
+                                </div>
+                            )}
+
+                            {/* =================================================
                                 GUARDAR CAMBIOS
                             ================================================== */}
                             <button
@@ -171,18 +171,6 @@ export const Perfil = () => {
                             <i className="bi bi-shield-lock me-2 text-primary"></i>
                             Cambiar Contraseña
                         </h5>
-
-                        {errPass && (
-                            <div className="alert alert-danger p-2 text-center rounded-3 small">
-                                {errPass}
-                            </div>
-                        )}
-
-                        {msgPass && (
-                            <div className="alert alert-success p-2 text-center rounded-3 small">
-                                {msgPass}
-                            </div>
-                        )}
 
                         <form onSubmit={handleSubmitPassword}>
 
@@ -241,6 +229,18 @@ export const Perfil = () => {
                                     minLength={8}
                                 />
                             </div>
+
+                            {errPass && (
+                                <div className="alert alert-danger p-2 text-center rounded-3 small">
+                                    {errPass}
+                                </div>
+                            )}
+
+                            {msgPass && (
+                                <div className="alert alert-success p-2 text-center rounded-3 small">
+                                    {msgPass}
+                                </div>
+                            )}
 
                             {/* =================================================
                                 ACTUALIZAR CONTRASEÑA
