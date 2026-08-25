@@ -18,7 +18,22 @@ export const Prestamos = () => {
                 <form onSubmit={handleSubmit} className="row g-3">
                     <div className="col-md-4">
                         <label className="form-label text-muted fw-semibold small">ID del Usuario (Estudiante/Funcionario)</label>
-                        <input type="number" className="form-control form-control-glass" value={form.usuario_id} onChange={(e) => setForm({...form, usuario_id: e.target.value})} placeholder="Ej: 1" required />
+                        <input
+                            type="number"
+                            className="form-control form-control-glass"
+                            value={form.usuario_id}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                if (val === '' || (Number(val) > 0 && !val.includes('-'))) {
+                                    setForm({...form, usuario_id: val});
+                                }
+                            }}
+                            onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
+                            placeholder="Ej: 1"
+                            min="1"
+                            step="1"
+                            required
+                        />
                     </div>
                     <div className="col-md-8">
                         <label className="form-label text-muted fw-semibold small">Equipos Disponibles</label>
@@ -49,7 +64,7 @@ export const Prestamos = () => {
                 <form onSubmit={handleFiltrar} className="row g-3 align-items-end">
                     <div className="col-md-2">
                         <label className="form-label text-muted small fw-semibold">ID Usuario</label>
-                        <input type="number" className="form-control form-control-glass" name="usuario" value={filtros.usuario} onChange={handleFiltroChange} placeholder="Ej: 3" />
+                        <input type="number" className="form-control form-control-glass" name="usuario" value={filtros.usuario} onChange={handleFiltroChange} onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }} min="1" placeholder="Ej: 3" />
                     </div>
                     <div className="col-md-2">
                         <label className="form-label text-muted small fw-semibold">Fecha</label>
@@ -164,7 +179,7 @@ export const Prestamos = () => {
                         <div className="text-center mb-3">
                             <i className="bi bi-question-circle text-primary" style={{fontSize: '2.5rem'}}></i>
                         </div>
-                        <p className="text-center fw-semibold mb-4">¿Devolver préstamo?</p>
+                        <p className="text-center fw-semibold mb-4">¿Marcar todo el préstamo como devuelto?</p>
                         <div className="d-flex justify-content-center gap-2">
                             <button className="btn btn-premium px-4" onClick={confirmarDevolucionCompleta}>
                                 <i className="bi bi-check-lg me-1"></i>Aceptar

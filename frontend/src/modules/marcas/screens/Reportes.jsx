@@ -3,6 +3,10 @@ import { useReportes } from '../hooks/useReportes.js';
 export const Reportes = () => {
     const { marcas, filtros, handleChange, handleBuscar, handleExportar } = useReportes();
 
+    const bloquearNegativo = (e) => {
+        if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault();
+    };
+
     return (
         <div className="container mt-4 animate-fade-in-up">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -18,19 +22,19 @@ export const Reportes = () => {
                 <h5 className="fw-bold mb-3"><i className="bi bi-funnel text-primary me-2"></i>Filtros de Búsqueda</h5>
                 <form onSubmit={handleBuscar} className="row g-3">
                     <div className="col-md-2">
-                        <input type="number" className="form-control form-control-glass" name="anio" placeholder="Año (Ej: 2026)" value={filtros.anio} onChange={handleChange} />
+                        <input type="number" className="form-control form-control-glass" name="anio" placeholder="Año (Ej: 2026)" value={filtros.anio} onChange={handleChange} onKeyDown={bloquearNegativo} min="1" />
                     </div>
                     <div className="col-md-2">
-                        <input type="number" className="form-control form-control-glass" name="mes" placeholder="Mes (1-12)" value={filtros.mes} onChange={handleChange} />
+                        <input type="number" className="form-control form-control-glass" name="mes" placeholder="Mes (1-12)" value={filtros.mes} onChange={handleChange} onKeyDown={bloquearNegativo} min="1" max="12" />
                     </div>
                     <div className="col-md-2">
-                        <input type="number" className="form-control form-control-glass" name="dia" placeholder="Día" value={filtros.dia} onChange={handleChange} />
+                        <input type="number" className="form-control form-control-glass" name="dia" placeholder="Día" value={filtros.dia} onChange={handleChange} onKeyDown={bloquearNegativo} min="1" max="31" />
                     </div>
                     <div className="col-md-2">
-                        <input type="number" className="form-control form-control-glass" name="usuario" placeholder="ID Usuario" value={filtros.usuario} onChange={handleChange} />
+                        <input type="number" className="form-control form-control-glass" name="usuario" placeholder="ID Usuario" value={filtros.usuario} onChange={handleChange} onKeyDown={bloquearNegativo} min="1" />
                     </div>
                     <div className="col-md-2">
-                        <input type="number" className="form-control form-control-glass" name="departamento" placeholder="ID Depto" value={filtros.departamento} onChange={handleChange} />
+                        <input type="number" className="form-control form-control-glass" name="departamento" placeholder="ID Depto" value={filtros.departamento} onChange={handleChange} onKeyDown={bloquearNegativo} min="1" />
                     </div>
                     <div className="col-md-2 d-flex">
                         <button type="submit" className="btn btn-premium w-100 rounded-3"><i className="bi bi-search me-2"></i> Buscar</button>

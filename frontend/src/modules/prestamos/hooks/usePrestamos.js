@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getPrestamos, crearPrestamo, devolverCompleto, getDetalles, devolverDetalle } from '../services/prestamos.service.js';
 import { getEquipos } from '../../equipos/services/equipos.service.js';
+import { useAutoDismiss } from '../../../shared/hooks/useAutoDismiss.js';
+
 
 export const usePrestamos = () => {
     const [prestamos, setPrestamos] = useState([]);
@@ -14,6 +16,11 @@ export const usePrestamos = () => {
     const [errorAcciones, setErrorAcciones] = useState(null);
     const [errorModal, setErrorModal] = useState(null);
     const [confirmarDevolucion, setConfirmarDevolucion] = useState(null);
+
+    useAutoDismiss(msgPrestamo, setMsgPrestamo);
+    useAutoDismiss(errorPrestamo, setErrorPrestamo);
+    useAutoDismiss(errorAcciones, setErrorAcciones);
+    useAutoDismiss(errorModal, setErrorModal);
 
     useEffect(() => {
         loadData();
@@ -33,7 +40,10 @@ export const usePrestamos = () => {
         }
     };
 
-    const handleFiltroChange = (e) => setFiltros({ ...filtros, [e.target.name]: e.target.value });
+    const handleFiltroChange = (e) => {
+        if (e.target.type === 'number' && e.target.value.includes('-')) return;
+        setFiltros({ ...filtros, [e.target.name]: e.target.value });
+    };
 
     const handleFiltrar = (e) => {
         e.preventDefault();
@@ -59,6 +69,12 @@ export const usePrestamos = () => {
         e.preventDefault();
         setMsgPrestamo(null);
         setErrorPrestamo(null);
+
+        if (!form.usuario_id || Number(form.usuario_id) <= 0) {
+            setErrorPrestamo('El ID del usuario debe ser un número positivo.');
+            return;
+        }
+
         try {
             await crearPrestamo(form);
             setForm({ usuario_id: '', equipos: [] });

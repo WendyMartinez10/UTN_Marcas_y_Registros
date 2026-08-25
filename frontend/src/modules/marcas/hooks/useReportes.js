@@ -7,6 +7,7 @@ export const useReportes = () => {
     const [filtros, setFiltros] = useState({ anio: '', mes: '', dia: '', usuario: '', departamento: '' });
 
     const handleChange = (e) => {
+        if (e.target.type === 'number' && e.target.value.includes('-')) return;
         setFiltros({ ...filtros, [e.target.name]: e.target.value });
     };
 
@@ -22,7 +23,7 @@ export const useReportes = () => {
 
     const handleExportar = (formato) => {
         const query = new URLSearchParams({ ...filtros, formato }).toString();
-        // Usa la URL configurada del backend para exportar el reporte.
+    
         window.open(`${API_URL}/marcas/exportar?${query}`, '_blank');
     };
 
