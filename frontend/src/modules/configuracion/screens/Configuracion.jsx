@@ -19,9 +19,6 @@ export const Configuracion = () => {
             <h2 className="hero-gradient-text fw-bold mb-4"><i className="bi bi-gear me-2"></i>Configuración del Sistema</h2>
 
             <div className="glass-panel p-4" style={{ maxWidth: '700px' }}>
-                {error && <div className="alert alert-danger p-2 text-center rounded-3 small">{error}</div>}
-                {msg && <div className="alert alert-success p-2 text-center rounded-3 small">{msg}</div>}
-
                 <form onSubmit={handleSubmit}>
                     {claves.map(clave => {
                         const meta = ETIQUETAS[clave] || { label: clave, icon: 'bi-sliders', type: 'text' };
@@ -40,6 +37,9 @@ export const Configuracion = () => {
                             </div>
                         );
                     })}
+
+                    {error && <div className="alert alert-danger p-2 text-center rounded-3 small">{error}</div>}
+                    {msg && <div className="alert alert-success p-2 text-center rounded-3 small">{msg}</div>}
 
                     <button type="submit" className="btn btn-premium px-4"><i className="bi bi-check-lg me-2"></i>Guardar Configuración</button>
                 </form>
