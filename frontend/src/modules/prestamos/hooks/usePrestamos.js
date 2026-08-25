@@ -9,6 +9,10 @@ export const usePrestamos = () => {
     const [form, setForm] = useState({ usuario_id: '', equipos: [] });
     const [filtros, setFiltros] = useState({ usuario: '', fecha: '', estado: '', equipo: '' });
     const [detallesModal, setDetallesModal] = useState(null);
+    const [msgPrestamo, setMsgPrestamo] = useState(null);
+    const [errorPrestamo, setErrorPrestamo] = useState(null);
+    const [errorAcciones, setErrorAcciones] = useState(null);
+    const [errorModal, setErrorModal] = useState(null);
 
     useEffect(() => {
         loadData();
@@ -52,50 +56,59 @@ export const usePrestamos = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setMsgPrestamo(null);
+        setErrorPrestamo(null);
         try {
             await crearPrestamo(form);
             setForm({ usuario_id: '', equipos: [] });
             loadData();
-            alert('Préstamo creado con éxito');
+            setMsgPrestamo('Préstamo creado con éxito');
         } catch (error) {
-            alert(error.message);
+            setErrorPrestamo(error.message);
         }
     };
 
     const handleDevolverCompleto = async (id) => {
         if (confirm('¿Marcar todo el préstamo como devuelto?')) {
+            setErrorAcciones(null);
             try {
                 await devolverCompleto(id);
                 loadData();
             } catch (error) {
-                alert(error.message);
+                setErrorAcciones(error.message);
             }
         }
     };
 
     const verDetalles = async (id) => {
+        setErrorAcciones(null);
         try {
             const res = await getDetalles(id);
             setDetallesModal({ id, detalles: res.data });
         } catch (error) {
-            alert(error.message);
+            setErrorAcciones(error.message);
         }
     };
 
-    const cerrarDetalles = () => setDetallesModal(null);
+    const cerrarDetalles = () => {
+        setDetallesModal(null);
+        setErrorModal(null);
+    };
 
     const handleDevolverDetalle = async (prestamoId, detalleId) => {
+        setErrorModal(null);
         try {
             await devolverDetalle(prestamoId, detalleId);
             verDetalles(prestamoId);
             loadData();
         } catch (error) {
-            alert(error.message);
+            setErrorModal(error.message);
         }
     };
 
     return {
         prestamos, equiposDisponibles, todosEquipos, form, setForm, filtros, detallesModal,
+        msgPrestamo, errorPrestamo, errorAcciones, errorModal,
         handleFiltroChange, handleFiltrar, handleLimpiarFiltros, handleCheckbox,
         handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle
     };

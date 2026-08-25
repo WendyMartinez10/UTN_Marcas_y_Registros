@@ -3,6 +3,7 @@ import { usePrestamos } from '../hooks/usePrestamos.js';
 export const Prestamos = () => {
     const {
         prestamos, equiposDisponibles, todosEquipos, form, setForm, filtros, detallesModal,
+        msgPrestamo, errorPrestamo, errorAcciones, errorModal,
         handleFiltroChange, handleFiltrar, handleLimpiarFiltros, handleCheckbox,
         handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle
     } = usePrestamos();
@@ -33,6 +34,8 @@ export const Prestamos = () => {
                         </div>
                     </div>
                     <div className="col-12 mt-4">
+                        {errorPrestamo && <div className="alert alert-danger p-2 text-center rounded-3 small">{errorPrestamo}</div>}
+                        {msgPrestamo && <div className="alert alert-success p-2 text-center rounded-3 small">{msgPrestamo}</div>}
                         <button type="submit" className="btn btn-premium px-4" disabled={form.equipos.length === 0 || !form.usuario_id}>
                             <i className="bi bi-send-check me-2"></i>Crear Préstamo
                         </button>
@@ -76,6 +79,7 @@ export const Prestamos = () => {
             </div>
 
             <div className="glass-panel overflow-hidden position-relative">
+                {errorAcciones && <div className="alert alert-danger p-2 text-center rounded-3 small m-3 mb-0">{errorAcciones}</div>}
                 <table className="table table-hover align-middle mb-0">
                     <thead className="bg-light">
                         <tr>
@@ -121,6 +125,7 @@ export const Prestamos = () => {
                             <button className="btn btn-light rounded-circle shadow-sm" style={{width:'36px', height:'36px'}} onClick={cerrarDetalles}><i className="bi bi-x-lg"></i></button>
                         </div>
                         <div className="p-4">
+                            {errorModal && <div className="alert alert-danger p-2 text-center rounded-3 small">{errorModal}</div>}
                             <div className="table-responsive">
                                 <table className="table table-hover align-middle">
                                     <thead className="bg-light">
