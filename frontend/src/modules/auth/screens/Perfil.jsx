@@ -1,5 +1,5 @@
 import { usePerfil } from '../hooks/usePerfil.js';
-
+ 
 export const Perfil = () => {
     const {
         user,

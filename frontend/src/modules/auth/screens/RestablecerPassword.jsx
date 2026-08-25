@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useRestablecerPassword } from '../hooks/useRestablecerPassword.js';
-
+ 
 export const RestablecerPassword = () => {
     const { token, form, setForm, error, success, handleSubmit } = useRestablecerPassword();
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useRegistro } from '../hooks/useRegistro.js';
-
+ 
 export const Registro = () => {
     const { departamentos, error, success, handleChange, handleSubmit } = useRegistro();
 

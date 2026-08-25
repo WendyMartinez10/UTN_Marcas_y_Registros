@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useOlvidePassword } from '../hooks/useOlvidePassword.js';
-
+ 
 export const OlvidePassword = () => {
     const { identificador, setIdentificador, enviado, error, handleSubmit } = useOlvidePassword();
 
