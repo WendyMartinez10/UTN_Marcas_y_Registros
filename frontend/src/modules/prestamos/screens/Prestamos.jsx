@@ -3,9 +3,10 @@ import { usePrestamos } from '../hooks/usePrestamos.js';
 export const Prestamos = () => {
     const {
         prestamos, equiposDisponibles, todosEquipos, form, setForm, filtros, detallesModal,
-        msgPrestamo, errorPrestamo, errorAcciones, errorModal,
+        msgPrestamo, errorPrestamo, errorAcciones, errorModal, confirmarDevolucion,
         handleFiltroChange, handleFiltrar, handleLimpiarFiltros, handleCheckbox,
-        handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle
+        handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle,
+        cancelarDevolucion, confirmarDevolucionCompleta
     } = usePrestamos();
 
     return (
@@ -152,6 +153,25 @@ export const Prestamos = () => {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {confirmarDevolucion && (
+                <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center animate-fade-in-up" style={{backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1060}}>
+                    <div className="glass-panel p-4" style={{width: '420px', maxWidth: '90%'}}>
+                        <div className="text-center mb-3">
+                            <i className="bi bi-question-circle text-primary" style={{fontSize: '2.5rem'}}></i>
+                        </div>
+                        <p className="text-center fw-semibold mb-4">¿Devolver préstamo?</p>
+                        <div className="d-flex justify-content-center gap-2">
+                            <button className="btn btn-premium px-4" onClick={confirmarDevolucionCompleta}>
+                                <i className="bi bi-check-lg me-1"></i>Aceptar
+                            </button>
+                            <button className="btn btn-outline-secondary px-4" onClick={cancelarDevolucion}>
+                                Cancelar
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ export const usePrestamos = () => {
     const [errorPrestamo, setErrorPrestamo] = useState(null);
     const [errorAcciones, setErrorAcciones] = useState(null);
     const [errorModal, setErrorModal] = useState(null);
+    const [confirmarDevolucion, setConfirmarDevolucion] = useState(null);
 
     useEffect(() => {
         loadData();
@@ -68,15 +69,22 @@ export const usePrestamos = () => {
         }
     };
 
-    const handleDevolverCompleto = async (id) => {
-        if (confirm('¿Marcar todo el préstamo como devuelto?')) {
-            setErrorAcciones(null);
-            try {
-                await devolverCompleto(id);
-                loadData();
-            } catch (error) {
-                setErrorAcciones(error.message);
-            }
+    const handleDevolverCompleto = (id) => {
+        setErrorAcciones(null);
+        setConfirmarDevolucion(id);
+    };
+
+    const cancelarDevolucion = () => setConfirmarDevolucion(null);
+
+    const confirmarDevolucionCompleta = async () => {
+        const id = confirmarDevolucion;
+        setConfirmarDevolucion(null);
+        setErrorAcciones(null);
+        try {
+            await devolverCompleto(id);
+            loadData();
+        } catch (error) {
+            setErrorAcciones(error.message);
         }
     };
 
@@ -108,8 +116,9 @@ export const usePrestamos = () => {
 
     return {
         prestamos, equiposDisponibles, todosEquipos, form, setForm, filtros, detallesModal,
-        msgPrestamo, errorPrestamo, errorAcciones, errorModal,
+        msgPrestamo, errorPrestamo, errorAcciones, errorModal, confirmarDevolucion,
         handleFiltroChange, handleFiltrar, handleLimpiarFiltros, handleCheckbox,
-        handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle
+        handleSubmit, handleDevolverCompleto, verDetalles, cerrarDetalles, handleDevolverDetalle,
+        cancelarDevolucion, confirmarDevolucionCompleta
     };
 };
